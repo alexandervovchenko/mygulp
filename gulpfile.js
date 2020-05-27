@@ -20,6 +20,9 @@ const fonter = require('gulp-fonter');
 const del = require('del');
 const browserSync = require('browser-sync');
 
+const gulpif = require('gulp-if');
+const argv = require('yargs').argv;
+
 const path = {
     source: {
         html: 'src/index.html',
@@ -67,7 +70,7 @@ function style() {
         .pipe(webpcss())
         .pipe(sass({outputStyle: 'nested'}).on('error', sass.logError))
         .pipe(autoprefixer())
-        .pipe(cleanCss({format : 'beautify', level: {2: {mergeMedia: true}}}))
+        .pipe(gulpif(argv.prod, cleanCss({level: {2: {mergeMedia: true}}})))
         .pipe(sourcemaps.write('.'))
         .pipe(dest(path.build.css))
         .pipe(browserSync.stream());
@@ -76,7 +79,7 @@ function style() {
 function js() {
     return src(path.source.js)
         .pipe(concat('main.min.js'))
-        .pipe(uglify({ toplevel: true }))
+        .pipe(gulpif(argv.prod, uglify({ toplevel: true })))
         .pipe(dest(path.build.js))
         .pipe(browserSync.stream());
 }
@@ -161,7 +164,7 @@ function watching() {
     watch(path.watch.svg, svg);
 }
 
-let build = series(clean, parallel(html, style, js, img, svg, spritesvg));
+let build = series(clean, parallel(html, style, js, img, svg));
 let fonts = series(otf,ttf);
 
 exports.html = html;
