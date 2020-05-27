@@ -68,7 +68,7 @@ function style() {
         .pipe(sourcemaps.init())
         .pipe(concat('style.min.css'))
         .pipe(webpcss())
-        .pipe(sass({outputStyle: 'nested'}).on('error', sass.logError))
+        .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer())
         .pipe(gulpif(argv.prod, cleanCss({level: {2: {mergeMedia: true}}})))
         .pipe(sourcemaps.write('.'))
