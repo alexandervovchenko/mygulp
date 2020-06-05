@@ -156,7 +156,7 @@ function cleanfonts() {
     return del(['build/assets/fonts']);
 }
 
-function watching() {
+function watcher() {
     watch(path.watch.html, html);
     watch(path.watch.css, style);
     watch(path.watch.js, js);
@@ -173,6 +173,7 @@ exports.js = js;
 exports.img = img;
 exports.svg = svg;
 
+exports.watcher = watcher;
 exports.spritesvg = spritesvg;
 exports.spriteimg = spriteimg;
 exports.fonts = fonts;
@@ -181,5 +182,5 @@ exports.cleanimg = cleanimg;
 exports.cleanfonts = cleanfonts;
 exports.build = build;
 
-exports.default = series(build, parallel(browserSyncServer, watching));
-exports.modx = series(build, parallel(browserSyncProxy, watching));
+exports.default = series(build, parallel(browserSyncServer, watcher));
+exports.modx = series(build, parallel(browserSyncProxy, watcher));
