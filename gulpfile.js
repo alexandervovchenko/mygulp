@@ -47,7 +47,7 @@ const path = {
         otf: 'src/fonts/'
     },
     watch: {
-        html: 'src/tpl/**/*.*',
+        html: 'src/**/*.*',
         css: 'src/**/*.*',
         js: 'src/js/**/*.*',
         img: 'src/img/**/*.*',
