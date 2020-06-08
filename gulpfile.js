@@ -25,7 +25,7 @@ const argv = require('yargs').argv;
 
 const path = {
     source: {
-        html: 'src/index.html',
+        html: 'src/*.*',
         css: ['src/style/variables/*.scss', 'src/style/lib/*.*', 'src/tpl/**/*.scss'],
         js: ['src/js/jquery/*.js', 'src/js/libjs/*.js', 'src/js/myjs/*.js'],
         img: 'src/img/**/*.*',
@@ -145,7 +145,7 @@ function browserSyncProxy() {
 }
 
 function clean() {
-    return del(['build/assets/**', '!build/assets', '!build/assets/img/**', '!build/assets/fonts/**', '!build/assets/svg/**']);
+    return del(['build/*.*', 'build/assets/**', '!build/assets', '!build/assets/img/**', '!build/assets/fonts/**', '!build/assets/svg/**']);
 }
 
 function cleanimg() {
