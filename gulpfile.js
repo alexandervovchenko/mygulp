@@ -55,7 +55,7 @@ const path = {
     }
 };
 
-function html() {
+const html = () => {
     return src(path.source.html)
         .pipe(fileinclude({prefix: '@@', basepath: '@file'}))
         .pipe(webphtml())
@@ -63,7 +63,7 @@ function html() {
         .pipe(browserSync.stream());
 }
 
-function style() {
+const style = () => {
     return src(path.source.css)
         .pipe(sourcemaps.init())
         .pipe(concat('style.min.css'))
@@ -76,7 +76,7 @@ function style() {
         .pipe(browserSync.stream());
 }
 
-function js() {
+const js = () => {
     return src(path.source.js)
         .pipe(concat('main.min.js'))
         .pipe(gulpif(argv.prod, uglify({ toplevel: true })))
@@ -84,7 +84,7 @@ function js() {
         .pipe(browserSync.stream());
 }
 
-function img() {
+const img = () => {
         src(path.source.img)
         .pipe(webp({quality: 70}))
         .pipe(dest(path.build.img))
@@ -94,20 +94,20 @@ function img() {
         .pipe(browserSync.stream());
 }
 
-function spriteimg() {
+const spriteimg = () => {
     return src(path.source.sprite)
     .pipe(spritesmith({imgName: 'img/common/sprite.png', cssName: 'style/lib/sprite.css', imgPath: '../img/common/sprite.png'}))
     .pipe(dest(path.build.sprite))
 }
 
-function svg() {
+const svg = () => {
     return src(path.source.svg)
         .pipe(svgmin())
         .pipe(dest(path.build.svg))
         .pipe(browserSync.stream());
 }
 
-function spritesvg() {
+const spritesvg = () => {
     return src(path.source.spritesvg)
         .pipe(svgmin())
         .pipe(svgSprites({preview: false, cssFile: "../../../../src/style/lib/spritesvg.css", svgPath: '../svg/sprite/%f', svg: {sprite: 'sprite/spritesvg.svg'}}))
@@ -115,13 +115,13 @@ function spritesvg() {
         .pipe(browserSync.stream());
 }
 
-function otf() {
+const otf = () => {
     return src(path.source.otf)
         .pipe(fonter({formats: ['ttf']}))
         .pipe(dest(path.build.otf));
 }
 
-function ttf() {
+const ttf = () => {
     src(path.source.fonts)
         .pipe(ttf2woff2())
         .pipe(dest(path.build.fonts));
@@ -130,7 +130,7 @@ function ttf() {
         .pipe(dest(path.build.fonts));
 }
 
-function browserSyncServer() {
+const browserSyncServer = () => {
     browserSync.init({
         server: {
             baseDir: "./build"
@@ -138,25 +138,25 @@ function browserSyncServer() {
     });
 }
 
-function browserSyncProxy() {
+const browserSyncProxy = () => {
     browserSync.init({
         proxy: "namedir"
     });
 }
 
-function clean() {
+const clean = () => {
     return del(['build/*.*', 'build/assets/**', '!build/assets', '!build/assets/img/**', '!build/assets/fonts/**', '!build/assets/svg/**']);
 }
 
-function cleanimg() {
+const cleanimg = () => {
     return del(['build/assets/img','.tinypng-sigs']);
 }
 
-function cleanfonts() {
+const cleanfonts = () => {
     return del(['build/assets/fonts']);
 }
 
-function watcher() {
+const watcher = () => {
     watch(path.watch.html, html);
     watch(path.watch.css, style);
     watch(path.watch.js, js);
