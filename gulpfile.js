@@ -5,7 +5,7 @@ const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps'); 
 const cleanCss = require('gulp-clean-css');
 const autoprefixer = require('gulp-autoprefixer');
-const uglify = require('gulp-uglify');
+const terser = require('gulp-terser');
 const concat = require('gulp-concat');
 const tinypng = require('gulp-tinypng-compress');
 const webp = require('gulp-webp');
@@ -79,7 +79,7 @@ const style = () => {
 const js = () => {
     return src(path.source.js)
         .pipe(concat('main.min.js'))
-        .pipe(gulpif(argv.prod, uglify({ toplevel: true })))
+        .pipe(terser())
         .pipe(dest(path.build.js))
         .pipe(browserSync.stream());
 }
